@@ -7,6 +7,9 @@
     "ts-jest": "^29.2.5",
     "undici": "^6.20.1"
   },
+  "scripts": {
+    "prepare": "npm run build"
+  },
   "peerDependencies": {
     "typescript": "^5.6.3"
   },
