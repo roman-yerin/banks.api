@@ -1,7 +1,5 @@
 import { prePatchedFetch } from "@/transport/fetch"
 import * as dotenv from "dotenv"
-import * as assert from "node:assert"
-import * as fs from "fs"
 
 dotenv.config()
 
@@ -14,8 +12,8 @@ class AlfaToken {
     tokenData: { access_token: string, refresh_token: string, expires_in: number, token_type: string, id_token: string }
     redirectUri: string
     constructor(redirectUri: string) {
-        assert(typeof(process.env.ALFA_CLIENT_ID) !== 'undefined', "ALFA_CLIENT_ID is not set")
-        assert(typeof(process.env.ALFA_CLIENT_SECRET) !== 'undefined', "ALFA_CLIENT_SECRET is not set")
+        if(typeof(process.env.ALFA_CLIENT_ID) !== 'undefined'){ throw new Error("ALFA_CLIENT_ID is not set")}
+        if(typeof(process.env.ALFA_CLIENT_SECRET) !== 'undefined'){ throw new Error("ALFA_CLIENT_SECRET is not set")}
         this.clientId = process.env.ALFA_CLIENT_ID!
         this.clientSecret = process.env.ALFA_CLIENT_SECRET!
         this.fetch = prePatchedFetch()

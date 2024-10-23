@@ -1,8 +1,7 @@
-import * as assert from "node:assert";
 
 async function getAccessToken(redirectUri: string, authCode: string) {
-    assert(typeof(process.env.MODUL_CLIENT_ID) !== 'undefined', "MODUL_CLIENT_ID is not set")
-    assert(typeof(process.env.MODUL_CLIENT_SECRET) !== 'undefined', "MODUL_CLIENT_SECRET is not set")
+    if(typeof(process.env.MODUL_CLIENT_ID) !== 'undefined'){ throw new Error("MODUL_CLIENT_ID is not set")}
+    if(typeof(process.env.MODUL_CLIENT_SECRET) !== 'undefined'){ throw new Error("MODUL_CLIENT_SECRET is not set")}
 
     const clientId = process.env.MODUL_CLIENT_ID!
     const clientSecret = process.env.MODUL_CLIENT_SECRET!

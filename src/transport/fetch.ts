@@ -26,8 +26,8 @@ function patchFetch(cert?: string|Buffer, key?: string|Buffer) {
 }
 
 function prePatchedFetch() {
-    assert(typeof(process.env.HTTP_SSL_CERT) !== 'undefined', "HTTP_SSL_CERT is not set")
-    assert(typeof(process.env.HTTP_SSL_KEY) !== 'undefined', "HTTP_SSL_KEY is not set")
+    if(typeof(process.env.HTTP_SSL_CERT) !== 'undefined'){ throw new Error("HTTP_SSL_CERT is not set")}
+    if(typeof(process.env.HTTP_SSL_KEY) !== 'undefined'){ throw new Error("HTTP_SSL_KEY is not set")}
     const cert = fs.readFileSync(process.env.HTTP_SSL_CERT!)
     const key = fs.readFileSync(process.env.HTTP_SSL_KEY!)
 

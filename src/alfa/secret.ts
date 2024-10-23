@@ -1,6 +1,5 @@
 import { patchFetch } from "@/transport/fetch"
 import * as dotenv from "dotenv"
-import * as assert from "node:assert"
 import * as fs from "fs"
 
 dotenv.config()
@@ -11,9 +10,9 @@ class AlfaSecret {
     fetch: Function
     clientId: string
     constructor() {
-        assert(typeof(process.env.HTTP_SSL_CERT) !== 'undefined', "HTTP_SSL_CERT is not set")
-        assert(typeof(process.env.HTTP_SSL_KEY) !== 'undefined', "HTTP_SSL_KEY is not set")
-        assert(typeof(process.env.ALFA_CLIENT_ID) !== 'undefined', "ALFA_CLIENT_ID is not set")
+        if(typeof(process.env.HTTP_SSL_CERT) !== 'undefined'){ throw new Error("HTTP_SSL_CERT is not set")}
+        if(typeof(process.env.HTTP_SSL_KEY) !== 'undefined'){ throw new Error("HTTP_SSL_KEY is not set")}
+        if(typeof(process.env.ALFA_CLIENT_ID) !== 'undefined'){ throw new Error("ALFA_CLIENT_ID is not set")}
         this.clientId = process.env.ALFA_CLIENT_ID!
         const cert = fs.readFileSync(process.env.HTTP_SSL_CERT!)
         const key = fs.readFileSync(process.env.HTTP_SSL_KEY!)

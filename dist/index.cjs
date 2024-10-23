@@ -40,7 +40,6 @@ module.exports = __toCommonJS(src_exports);
 // src/transport/fetch.ts
 var import_undici = require("undici");
 var fs = __toESM(require("fs"), 1);
-var assert = __toESM(require("assert"), 1);
 var rootCA = process.env.HTTP_SSL_CA ?? "./src/transport/root_ca.crt";
 var subCA = process.env.HTTP_SSL_SUB_CA ?? "./src/transport/sub_ca.crt";
 function patchFetch(cert, key) {
@@ -62,8 +61,12 @@ function patchFetch(cert, key) {
   };
 }
 function prePatchedFetch() {
-  assert(typeof process.env.HTTP_SSL_CERT !== "undefined", "HTTP_SSL_CERT is not set");
-  assert(typeof process.env.HTTP_SSL_KEY !== "undefined", "HTTP_SSL_KEY is not set");
+  if (typeof process.env.HTTP_SSL_CERT !== "undefined") {
+    throw new Error("HTTP_SSL_CERT is not set");
+  }
+  if (typeof process.env.HTTP_SSL_KEY !== "undefined") {
+    throw new Error("HTTP_SSL_KEY is not set");
+  }
   const cert = fs.readFileSync(process.env.HTTP_SSL_CERT);
   const key = fs.readFileSync(process.env.HTTP_SSL_KEY);
   return patchFetch(cert, key);
@@ -80,12 +83,15 @@ __export(alfa_exports, {
 
 // src/alfa/id.ts
 var dotenv = __toESM(require("dotenv"), 1);
-var assert2 = __toESM(require("assert"), 1);
 dotenv.config();
 var BASE_URL = process.env.ENV === "sandbox" ? "https://id-sandbox.alfabank.ru" : "https://id.alfabank.ru";
 function getAuthURL(redirectUri, state) {
-  assert2(typeof process.env.ALFA_CLIENT_ID !== "undefined", "ALFA_CLIENT_ID is not set");
-  assert2(typeof process.env.ALFA_SCOPE !== "undefined", "ALFA_SCOPE is not set");
+  if (typeof process.env.ALFA_CLIENT_ID !== "undefined") {
+    throw new Error("ALFA_CLIENT_ID is not set");
+  }
+  if (typeof process.env.ALFA_SCOPE !== "undefined") {
+    throw new Error("ALFA_SCOPE is not set");
+  }
   let scope = process.env.ALFA_SCOPE.replaceAll(" ", "%20");
   let clientId = process.env.ALFA_CLIENT_ID;
   return `${BASE_URL}/oidc/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}&state=${state}`;
@@ -93,7 +99,6 @@ function getAuthURL(redirectUri, state) {
 
 // src/alfa/token.ts
 var dotenv2 = __toESM(require("dotenv"), 1);
-var assert3 = __toESM(require("assert"), 1);
 dotenv2.config();
 var BASE_URL2 = process.env.ENV === "sandbox" ? "https://sandbox.alfabank.ru" : "https://baas.alfabank.ru";
 var AlfaToken = class {
@@ -103,8 +108,12 @@ var AlfaToken = class {
   tokenData;
   redirectUri;
   constructor(redirectUri) {
-    assert3(typeof process.env.ALFA_CLIENT_ID !== "undefined", "ALFA_CLIENT_ID is not set");
-    assert3(typeof process.env.ALFA_CLIENT_SECRET !== "undefined", "ALFA_CLIENT_SECRET is not set");
+    if (typeof process.env.ALFA_CLIENT_ID !== "undefined") {
+      throw new Error("ALFA_CLIENT_ID is not set");
+    }
+    if (typeof process.env.ALFA_CLIENT_SECRET !== "undefined") {
+      throw new Error("ALFA_CLIENT_SECRET is not set");
+    }
     this.clientId = process.env.ALFA_CLIENT_ID;
     this.clientSecret = process.env.ALFA_CLIENT_SECRET;
     this.fetch = prePatchedFetch();
@@ -191,22 +200,28 @@ __export(modul_exports, {
 
 // src/modul/id.ts
 var dotenv3 = __toESM(require("dotenv"), 1);
-var assert4 = __toESM(require("assert"), 1);
 dotenv3.config();
 var BASE_URL5 = "https://api.modulbank.ru/v1";
 function getAuthURL2(redirectUri, state) {
-  assert4(typeof process.env.MODUL_CLIENT_ID !== "undefined", "MODUL_CLIENT_ID is not set");
-  assert4(typeof process.env.MODUL_SCOPE !== "undefined", "MODUL_SCOPE is not set");
+  if (typeof process.env.MODUL_CLIENT_ID !== "undefined") {
+    throw new Error("MODUL_CLIENT_ID is not set");
+  }
+  if (typeof process.env.MODUL_SCOPE !== "undefined") {
+    throw new Error("MODUL_SCOPE is not set");
+  }
   let scope = process.env.MODUL_SCOPE.replaceAll(" ", "%20");
   let clientId = process.env.MODUL_CLIENT_ID;
   return `${BASE_URL5}/oauth/authorize?clientId=${clientId}&redirectUri=${encodeURIComponent(redirectUri)}&scope=${scope}&state=${state}` + (process.env.ENV === "sandbox" ? "&sandbox=on" : "");
 }
 
 // src/modul/token.ts
-var assert5 = __toESM(require("assert"), 1);
 async function getAccessToken2(redirectUri, authCode) {
-  assert5(typeof process.env.MODUL_CLIENT_ID !== "undefined", "MODUL_CLIENT_ID is not set");
-  assert5(typeof process.env.MODUL_CLIENT_SECRET !== "undefined", "MODUL_CLIENT_SECRET is not set");
+  if (typeof process.env.MODUL_CLIENT_ID !== "undefined") {
+    throw new Error("MODUL_CLIENT_ID is not set");
+  }
+  if (typeof process.env.MODUL_CLIENT_SECRET !== "undefined") {
+    throw new Error("MODUL_CLIENT_SECRET is not set");
+  }
   const clientId = process.env.MODUL_CLIENT_ID;
   const clientSecret = process.env.MODUL_CLIENT_SECRET;
   const url = "https://api.modulbank.ru/v1/oauth/token";
