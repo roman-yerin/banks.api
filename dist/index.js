@@ -28,10 +28,10 @@ function patchFetch(cert, key) {
   };
 }
 function prePatchedFetch() {
-  if (typeof process.env.HTTP_SSL_CERT !== "undefined") {
+  if (typeof process.env.HTTP_SSL_CERT === "undefined") {
     throw new Error("HTTP_SSL_CERT is not set");
   }
-  if (typeof process.env.HTTP_SSL_KEY !== "undefined") {
+  if (typeof process.env.HTTP_SSL_KEY === "undefined") {
     throw new Error("HTTP_SSL_KEY is not set");
   }
   const cert = fs.readFileSync(process.env.HTTP_SSL_CERT);
@@ -53,10 +53,10 @@ import * as dotenv from "dotenv";
 dotenv.config();
 var BASE_URL = process.env.ENV === "sandbox" ? "https://id-sandbox.alfabank.ru" : "https://id.alfabank.ru";
 function getAuthURL(redirectUri, state) {
-  if (typeof process.env.ALFA_CLIENT_ID !== "undefined") {
+  if (typeof process.env.ALFA_CLIENT_ID === "undefined") {
     throw new Error("ALFA_CLIENT_ID is not set");
   }
-  if (typeof process.env.ALFA_SCOPE !== "undefined") {
+  if (typeof process.env.ALFA_SCOPE === "undefined") {
     throw new Error("ALFA_SCOPE is not set");
   }
   let scope = process.env.ALFA_SCOPE.replaceAll(" ", "%20");
@@ -75,10 +75,10 @@ var AlfaToken = class {
   tokenData;
   redirectUri;
   constructor(redirectUri) {
-    if (typeof process.env.ALFA_CLIENT_ID !== "undefined") {
+    if (typeof process.env.ALFA_CLIENT_ID === "undefined") {
       throw new Error("ALFA_CLIENT_ID is not set");
     }
-    if (typeof process.env.ALFA_CLIENT_SECRET !== "undefined") {
+    if (typeof process.env.ALFA_CLIENT_SECRET === "undefined") {
       throw new Error("ALFA_CLIENT_SECRET is not set");
     }
     this.clientId = process.env.ALFA_CLIENT_ID;
@@ -170,10 +170,10 @@ import * as dotenv3 from "dotenv";
 dotenv3.config();
 var BASE_URL5 = "https://api.modulbank.ru/v1";
 function getAuthURL2(redirectUri, state) {
-  if (typeof process.env.MODUL_CLIENT_ID !== "undefined") {
+  if (typeof process.env.MODUL_CLIENT_ID === "undefined") {
     throw new Error("MODUL_CLIENT_ID is not set");
   }
-  if (typeof process.env.MODUL_SCOPE !== "undefined") {
+  if (typeof process.env.MODUL_SCOPE === "undefined") {
     throw new Error("MODUL_SCOPE is not set");
   }
   let scope = process.env.MODUL_SCOPE.replaceAll(" ", "%20");
@@ -183,10 +183,10 @@ function getAuthURL2(redirectUri, state) {
 
 // src/modul/token.ts
 async function getAccessToken2(redirectUri, authCode) {
-  if (typeof process.env.MODUL_CLIENT_ID !== "undefined") {
+  if (typeof process.env.MODUL_CLIENT_ID === "undefined") {
     throw new Error("MODUL_CLIENT_ID is not set");
   }
-  if (typeof process.env.MODUL_CLIENT_SECRET !== "undefined") {
+  if (typeof process.env.MODUL_CLIENT_SECRET === "undefined") {
     throw new Error("MODUL_CLIENT_SECRET is not set");
   }
   const clientId = process.env.MODUL_CLIENT_ID;
