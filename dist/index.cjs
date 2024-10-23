@@ -1,13 +1,46 @@
+"use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
 };
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var src_exports = {};
+__export(src_exports, {
+  Alfa: () => alfa_exports,
+  Modul: () => modul_exports,
+  patchFetch: () => patchFetch,
+  prePatchedFetch: () => prePatchedFetch
+});
+module.exports = __toCommonJS(src_exports);
 
 // src/transport/fetch.ts
-import { Agent, fetch as fetch2 } from "undici";
-import * as fs from "fs";
-import * as assert from "node:assert";
+var import_undici = require("undici");
+var fs = __toESM(require("fs"), 1);
+var assert = __toESM(require("assert"), 1);
 var rootCA = process.env.HTTP_SSL_CA ?? "./src/transport/root_ca.crt";
 var subCA = process.env.HTTP_SSL_SUB_CA ?? "./src/transport/sub_ca.crt";
 function patchFetch(cert, key) {
@@ -15,7 +48,7 @@ function patchFetch(cert, key) {
   const sub = fs.readFileSync(subCA);
   return (input, init) => {
     const caString = ca.toString() + "\n" + sub.toString();
-    const agent = new Agent({
+    const agent = new import_undici.Agent({
       connect: {
         ca: caString,
         cert,
@@ -25,7 +58,7 @@ function patchFetch(cert, key) {
     const newInit = { ...init, ...{
       dispatcher: agent
     } };
-    return fetch2(input, newInit);
+    return (0, import_undici.fetch)(input, newInit);
   };
 }
 function prePatchedFetch() {
@@ -46,8 +79,8 @@ __export(alfa_exports, {
 });
 
 // src/alfa/id.ts
-import * as dotenv from "dotenv";
-import * as assert2 from "node:assert";
+var dotenv = __toESM(require("dotenv"), 1);
+var assert2 = __toESM(require("assert"), 1);
 dotenv.config();
 var BASE_URL = process.env.ENV === "sandbox" ? "https://id-sandbox.alfabank.ru" : "https://id.alfabank.ru";
 function getAuthURL(redirectUri, state) {
@@ -59,8 +92,8 @@ function getAuthURL(redirectUri, state) {
 }
 
 // src/alfa/token.ts
-import * as dotenv2 from "dotenv";
-import * as assert3 from "node:assert";
+var dotenv2 = __toESM(require("dotenv"), 1);
+var assert3 = __toESM(require("assert"), 1);
 dotenv2.config();
 var BASE_URL2 = process.env.ENV === "sandbox" ? "https://sandbox.alfabank.ru" : "https://baas.alfabank.ru";
 var AlfaToken = class {
@@ -157,8 +190,8 @@ __export(modul_exports, {
 });
 
 // src/modul/id.ts
-import * as dotenv3 from "dotenv";
-import * as assert4 from "node:assert";
+var dotenv3 = __toESM(require("dotenv"), 1);
+var assert4 = __toESM(require("assert"), 1);
 dotenv3.config();
 var BASE_URL5 = "https://api.modulbank.ru/v1";
 function getAuthURL2(redirectUri, state) {
@@ -170,7 +203,7 @@ function getAuthURL2(redirectUri, state) {
 }
 
 // src/modul/token.ts
-import * as assert5 from "node:assert";
+var assert5 = __toESM(require("assert"), 1);
 async function getAccessToken2(redirectUri, authCode) {
   assert5(typeof process.env.MODUL_CLIENT_ID !== "undefined", "MODUL_CLIENT_ID is not set");
   assert5(typeof process.env.MODUL_CLIENT_SECRET !== "undefined", "MODUL_CLIENT_SECRET is not set");
@@ -199,9 +232,10 @@ async function getAccessToken2(redirectUri, authCode) {
   const tokenData = await response.json();
   return tokenData.accessToken ?? "";
 }
-export {
-  alfa_exports as Alfa,
-  modul_exports as Modul,
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  Alfa,
+  Modul,
   patchFetch,
   prePatchedFetch
-};
+});
