@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "strict": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
+}
