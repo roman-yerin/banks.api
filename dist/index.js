@@ -1,5 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patchFetch = void 0;
+exports.Modul = exports.Alfa = exports.prePatchedFetch = exports.patchFetch = void 0;
 const fetch_1 = require("@/transport/fetch");
 Object.defineProperty(exports, "patchFetch", { enumerable: true, get: function () { return fetch_1.patchFetch; } });
+Object.defineProperty(exports, "prePatchedFetch", { enumerable: true, get: function () { return fetch_1.prePatchedFetch; } });
+const Alfa = require("@/alfa");
+exports.Alfa = Alfa;
+const Modul = require("@/modul");
+exports.Modul = Modul;
