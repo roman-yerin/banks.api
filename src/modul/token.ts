@@ -1,7 +1,7 @@
 
 async function getAccessToken(redirectUri: string, authCode: string) {
-    if(typeof(process.env.MODUL_CLIENT_ID) !== 'undefined'){ throw new Error("MODUL_CLIENT_ID is not set")}
-    if(typeof(process.env.MODUL_CLIENT_SECRET) !== 'undefined'){ throw new Error("MODUL_CLIENT_SECRET is not set")}
+    if(typeof(process.env.MODUL_CLIENT_ID) === 'undefined'){ throw new Error("MODUL_CLIENT_ID is not set")}
+    if(typeof(process.env.MODUL_CLIENT_SECRET) === 'undefined'){ throw new Error("MODUL_CLIENT_SECRET is not set")}
 
     const clientId = process.env.MODUL_CLIENT_ID!
     const clientSecret = process.env.MODUL_CLIENT_SECRET!

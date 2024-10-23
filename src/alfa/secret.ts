@@ -10,9 +10,9 @@ class AlfaSecret {
     fetch: Function
     clientId: string
     constructor() {
-        if(typeof(process.env.HTTP_SSL_CERT) !== 'undefined'){ throw new Error("HTTP_SSL_CERT is not set")}
-        if(typeof(process.env.HTTP_SSL_KEY) !== 'undefined'){ throw new Error("HTTP_SSL_KEY is not set")}
-        if(typeof(process.env.ALFA_CLIENT_ID) !== 'undefined'){ throw new Error("ALFA_CLIENT_ID is not set")}
+        if(typeof(process.env.HTTP_SSL_CERT) === 'undefined'){ throw new Error("HTTP_SSL_CERT is not set")}
+        if(typeof(process.env.HTTP_SSL_KEY) === 'undefined'){ throw new Error("HTTP_SSL_KEY is not set")}
+        if(typeof(process.env.ALFA_CLIENT_ID) === 'undefined'){ throw new Error("ALFA_CLIENT_ID is not set")}
         this.clientId = process.env.ALFA_CLIENT_ID!
         const cert = fs.readFileSync(process.env.HTTP_SSL_CERT!)
         const key = fs.readFileSync(process.env.HTTP_SSL_KEY!)
